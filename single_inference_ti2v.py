@@ -134,7 +134,7 @@ low quality, normal quality, jpeg artifacts, signature, watermark, username, blu
         width=1280,
         num_inference_steps=args.num_sampling_steps,
         guidance_scale=args.guidance_scale,
-        max_sequence_length=128,
+        max_sequence_length=512,
         generator=torch.Generator(device="cuda:0").manual_seed(args.seed),
     ).video[0]
 

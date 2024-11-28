@@ -129,7 +129,7 @@ low quality, normal quality, jpeg artifacts, signature, watermark, username, blu
         negative_prompt=negative_prompt,
         conditional_images=cond_imgs,
         conditional_images_indices=cond_imgs_indices,
-        num_frames=88,
+        num_frames=60,
         height=720,
         width=1280,
         num_inference_steps=args.num_sampling_steps,

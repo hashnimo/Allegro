@@ -129,16 +129,16 @@ low quality, normal quality, jpeg artifacts, signature, watermark, username, blu
         negative_prompt=negative_prompt,
         conditional_images=cond_imgs,
         conditional_images_indices=cond_imgs_indices,
-        num_frames=30,
-        height=720,
-        width=1280,
+        num_frames=25,
+        height=576,
+        width=1024,
         num_inference_steps=args.num_sampling_steps,
         guidance_scale=args.guidance_scale,
         max_sequence_length=512,
         generator=torch.Generator(device="cuda:0").manual_seed(args.seed),
     ).video[0]
 
-    imageio.mimwrite(args.save_path, out_video, fps=15, quality=6)  # highest quality is 10, lowest is 0
+    imageio.mimwrite(args.save_path, out_video, fps=6, quality=10)  # highest quality is 10, lowest is 0
 
 
 if __name__ == "__main__":

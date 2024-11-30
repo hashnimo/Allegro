@@ -71,10 +71,10 @@ def prompt_formatting(user_prompt, positive_prompt,):
 
 
 def single_inference(args):
-    dtype=torch.bfloat16
+    dtype=torch.float16
 
     # vae have better formance in float32
-    vae = AllegroAutoencoderKL3D.from_pretrained(args.vae, torch_dtype=torch.float32).cuda()
+    vae = AllegroAutoencoderKL3D.from_pretrained(args.vae, torch_dtype=torch.float16).cuda()
     vae.eval()
 
     text_encoder = T5EncoderModel.from_pretrained(
@@ -116,7 +116,7 @@ nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit,
 low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry.
 """
     user_prompt = prompt_formatting(args.user_prompt, positive_prompt)
-    pre_results = preprocess_images(args.first_frame, args.last_frame, height=720, width=1280, device=torch.cuda.current_device(), dtype=torch.bfloat16)
+    pre_results = preprocess_images(args.first_frame, args.last_frame, height=720, width=1280, device=torch.cuda.current_device(), dtype=torch.float16)
     cond_imgs = pre_results['conditional_images']
     cond_imgs_indices = pre_results['conditional_images_indices']
 
@@ -129,7 +129,7 @@ low quality, normal quality, jpeg artifacts, signature, watermark, username, blu
         negative_prompt=negative_prompt,
         conditional_images=cond_imgs,
         conditional_images_indices=cond_imgs_indices,
-        num_frames=12,
+        num_frames=88,
         height=720,
         width=1280,
         num_inference_steps=args.num_sampling_steps,
@@ -138,7 +138,7 @@ low quality, normal quality, jpeg artifacts, signature, watermark, username, blu
         generator=torch.Generator(device="cuda:0").manual_seed(args.seed),
     ).video[0]
 
-    imageio.mimwrite(args.save_path, out_video, fps=6, quality=10)  # highest quality is 10, lowest is 0
+    imageio.mimwrite(args.save_path, out_video, fps=15, quality=6)  # highest quality is 10, lowest is 0
 
 
 if __name__ == "__main__":

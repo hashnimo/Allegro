@@ -74,7 +74,7 @@ def single_inference(args):
     dtype=torch.bfloat16
 
     # vae have better formance in float32
-    vae = AllegroAutoencoderKL3D.from_pretrained(args.vae, torch_dtype=torch.float16)
+    vae = AllegroAutoencoderKL3D.from_pretrained(args.vae, torch_dtype=torch.float16).cuda()
     vae.eval()
 
     text_encoder = T5EncoderModel.from_pretrained(
@@ -92,7 +92,7 @@ def single_inference(args):
     transformer = AllegroTransformerTI2V3DModel.from_pretrained(
         args.dit,
         torch_dtype=dtype
-    )
+    ).cuda()
     transformer.eval()   
 
     allegro_ti2v_pipeline = AllegroTI2VPipeline(
@@ -135,7 +135,7 @@ low quality, normal quality, jpeg artifacts, signature, watermark, username, blu
         num_inference_steps=args.num_sampling_steps,
         guidance_scale=args.guidance_scale,
         max_sequence_length=512,
-        generator=torch.Generator(device="cpu").manual_seed(args.seed),
+        generator=torch.Generator(device="cuda:0").manual_seed(args.seed),
     ).video[0]
 
     imageio.mimwrite(args.save_path, out_video, fps=15, quality=6)  # highest quality is 10, lowest is 0

@@ -116,7 +116,7 @@ nsfw, lowres, bad anatomy, bad hands, text, error, missing fingers, extra digit,
 low quality, normal quality, jpeg artifacts, signature, watermark, username, blurry.
 """
     user_prompt = prompt_formatting(args.user_prompt, positive_prompt)
-    pre_results = preprocess_images(args.first_frame, args.last_frame, height=720, width=1280, device=torch.device("cpu"), dtype=torch.bfloat16)
+    pre_results = preprocess_images(args.first_frame, args.last_frame, height=720, width=1280, device=torch.cuda.current_device(), dtype=torch.bfloat16)
     cond_imgs = pre_results['conditional_images']
     cond_imgs_indices = pre_results['conditional_images_indices']
 

@@ -120,10 +120,13 @@ low quality, normal quality, jpeg artifacts, signature, watermark, username, blu
     cond_imgs = pre_results['conditional_images']
     cond_imgs_indices = pre_results['conditional_images_indices']
 
-    if args.enable_cpu_offload:
-        allegro_ti2v_pipeline.enable_sequential_cpu_offload()
-        print("cpu offload enabled")
-        
+    #if args.enable_cpu_offload:
+        #allegro_ti2v_pipeline.enable_sequential_cpu_offload()
+        #print("cpu offload enabled")
+    
+    allegro_ti2v_pipeline.enable_sequential_cpu_offload()
+    print("cpu offload enabled")
+    
     out_video = allegro_ti2v_pipeline(
         user_prompt, 
         negative_prompt=negative_prompt,

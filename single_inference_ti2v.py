@@ -79,7 +79,8 @@ def single_inference(args):
 
     text_encoder = T5EncoderModel.from_pretrained(
         args.text_encoder, 
-        torch_dtype=dtype
+        load_in_8bit=True,
+        device_map="auto"
     )
     text_encoder.eval()
 

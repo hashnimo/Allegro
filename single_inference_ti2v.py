@@ -74,7 +74,7 @@ def single_inference(args):
     dtype=torch.bfloat16
 
     # vae have better formance in float32
-    vae = AllegroAutoencoderKL3D.from_pretrained(args.vae, torch_dtype=torch.float16).cuda()
+    vae = AllegroAutoencoderKL3D.from_pretrained(args.vae, torch_dtype=torch.float32).cuda()
     vae.eval()
 
     text_encoder = T5EncoderModel.from_pretrained(
@@ -101,7 +101,7 @@ def single_inference(args):
         tokenizer=tokenizer,
         scheduler=scheduler,
         transformer=transformer
-    )
+    ).to("cuda:0")
 
 
     positive_prompt = """

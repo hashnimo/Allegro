@@ -102,7 +102,7 @@ def single_inference(args):
         tokenizer=tokenizer,
         scheduler=scheduler,
         transformer=transformer
-    ).to("cuda:0")
+    )#.to("cuda:0")
 
 
     positive_prompt = """
@@ -121,9 +121,9 @@ low quality, normal quality, jpeg artifacts, signature, watermark, username, blu
     cond_imgs = pre_results['conditional_images']
     cond_imgs_indices = pre_results['conditional_images_indices']
 
-    if args.enable_cpu_offload:
-        allegro_ti2v_pipeline.enable_sequential_cpu_offload()
-        print("cpu offload enabled")
+    #if args.enable_cpu_offload:
+        #allegro_ti2v_pipeline.enable_sequential_cpu_offload()
+        #print("cpu offload enabled")
         
     out_video = allegro_ti2v_pipeline(
         user_prompt, 
@@ -156,7 +156,7 @@ if __name__ == "__main__":
     parser.add_argument("--guidance_scale", type=float, default=8)
     parser.add_argument("--num_sampling_steps", type=int, default=100)
     parser.add_argument("--seed", type=int, default=1427329220)
-    parser.add_argument("--enable_cpu_offload", action='store_true')
+    #parser.add_argument("--enable_cpu_offload", action='store_true')
 
     args = parser.parse_args()
 
